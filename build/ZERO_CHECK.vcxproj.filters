@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\RobertWenink\Documents\ZZP\2 - Mandelbrot code trials\Cpp\build\CMakeFiles\73a3141d4b26188707be1721ff0e2c0d\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{74CD7B04-A747-3AE8-921B-4307D5CC5C73}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

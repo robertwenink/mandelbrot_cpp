@@ -1,0 +1,43 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Build&Debug Mandelbrot",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Debug/mandelbrot_zoom.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "internalConsole",
+            "preLaunchTask": "CMake Debug Build",  // links to the tasks.json labelled CMake Build
+            "internalConsoleOptions": "openOnSessionStart",
+            "logging": {
+                "moduleLoad": false, // Turn this off to suppress irrelevant module load messages
+                "trace": false,
+                "threadExit": false,
+                "processExit": false,
+            },
+          },
+          {
+            "name": "Release Build&Launch Mandelbrot",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Release/mandelbrot_zoom.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "internalConsole",
+            "preLaunchTask": "CMake Release Build",  // links to the tasks.json labelled CMake Build
+            "internalConsoleOptions": "openOnSessionStart",
+            "logging": {
+                "moduleLoad": false, // Turn this off to suppress irrelevant module load messages
+                "trace": false,
+                "threadExit": false,
+                "processExit": false,
+            },
+          }
+    ]
+  }

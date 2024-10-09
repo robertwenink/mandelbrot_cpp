@@ -1,0 +1,10 @@
+^C:\USERS\ROBERTWENINK\DOCUMENTS\ZZP\2 - MANDELBROT CODE TRIALS\CPP\BUILD\CMAKEFILES\73A3141D4B26188707BE1721FF0E2C0D\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/RobertWenink/Documents/ZZP/2 - Mandelbrot code trials/Cpp" "-BC:/Users/RobertWenink/Documents/ZZP/2 - Mandelbrot code trials/Cpp/build" --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file "C:/Users/RobertWenink/Documents/ZZP/2 - Mandelbrot code trials/Cpp/build/math_cpp.sln"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

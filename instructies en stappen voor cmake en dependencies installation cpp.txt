@@ -1,0 +1,34 @@
+Install cmake: https://cmake.org/download/
+
+
+Then easiest to have your own dependency manager (like e.g. pip is for python);  
+
+## Windows
+On windows: vcpkg
+
+git clone https://github.com/microsoft/vcpkg.git
+cd vcpkg
+.\bootstrap-vcpkg.bat
+.\vcpkg integrate install
+.\vcpkg install spdlog cxxopts opencv
+
+vcpkg install opencv[core,highgui,tbb]
+
+Might take a while including subdependencies, especially the first time around.
+
+If you move the directory elsewhere, rerun .\bootstrap-vcpkg.bat
+
+## Linux Ubuntu/Debian
+Just through apt-get, e.g.:
+sudo apt-get install libspdlog-dev
+
+
+# VScode cmake configuration
+- Install 'CMake Tools' extension
+- Cmake tools will prompt to configure the project if a CMakeLists.txt is there (or search CMake: Configure in the command palette)
+- Open the Command Palette (Ctrl+Shift+P), type "CMake: Select a Kit", and choose the appropriate compiler (e.g., MSVC 2019 or another installed version).
+- Go to settings and search for: "cmake.configureArgs", then add "-DCMAKE_TOOLCHAIN_FILE=C:/Users/RobertWenink/Documents/vcpkg/scripts/buildsystems/vcpkg.cmake" to the list. (take your own path here)
+
+In fact, when also through a tasks.json + launch.json we set up the run env, add the environment variable in the cmake parameters, e.g. 
+
+https://learn.microsoft.com/en-gb/vcpkg/get_started/get-started-vscode?pivots=shell-cmd 
