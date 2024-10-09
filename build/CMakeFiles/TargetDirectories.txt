@@ -1,3 +1,0 @@
-C:/Users/RobertWenink/Documents/ZZP/2 - Mandelbrot code trials/Cpp/build/CMakeFiles/mandelbrot_zoom.dir
-C:/Users/RobertWenink/Documents/ZZP/2 - Mandelbrot code trials/Cpp/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/RobertWenink/Documents/ZZP/2 - Mandelbrot code trials/Cpp/build/CMakeFiles/ZERO_CHECK.dir
