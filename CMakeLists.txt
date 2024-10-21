@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(math_cpp)
+project(Mandelbrot_cpp)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -23,10 +23,14 @@ find_package(spdlog REQUIRED)
 # find OpenCV
 find_package(OpenCV REQUIRED)
 
+# Add the src directory to the include path
+include_directories(src)
+
 add_executable(
-        mandelbrot_zoom
-        mandelbrot.cpp
-        src/mandelbrot.hpp
+        mandelbrot_render
+        mandelbrot_main.cpp
+        src/mandelbrot.cpp
+        src/mandelbrot_video.cpp
 )
 # link OpenCV
-target_link_libraries(mandelbrot_zoom ${OpenCV_LIBS} spdlog::spdlog)
+target_link_libraries(mandelbrot_render ${OpenCV_LIBS} spdlog::spdlog)

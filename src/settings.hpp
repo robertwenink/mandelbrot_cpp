@@ -1,3 +1,6 @@
+#ifndef SETTINGS_HPP
+#define SETTINGS_HPP
+
 #include <string>
 #include <vector>
 #include <cmath>
@@ -44,3 +47,5 @@ namespace Settings {
     vector<vector<double>> trajectory = {{-0.5,0,1},        // formulated as [x,y,zoom], this one is always required
                                          {0.3602404434377, -0.6413130610647635, pow(4096, 4) / 25.0}}; 
 }
+
+#endif
