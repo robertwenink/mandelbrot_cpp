@@ -26,7 +26,8 @@ namespace Settings {
     // options only used if animate and render are true
     bool liveplotting = false; // We can animate and render, but not draw, saves time.
     bool output_filename = "mandelbrot";
-
+    int fps = 30;
+    
     ///////////////////////////////////////////////////////
     ////////////// Trajectory definition //////////////////
     ///////////////////////////////////////////////////////
