@@ -1,0 +1,20 @@
+x_resolution: 3840
+y_resolution: 2160
+nr_frames: 600
+max_its: 2000
+
+gpu: false
+animate: true
+render: true
+liveplotting: false
+
+colormap: "twilight"
+output_filename: "mandelbrot"
+fps: 30
+
+xy_smoothing_power: 1.25
+start_height: 3.0
+
+trajectory:
+  - [ -0.5, 0, 1 ]
+  - [ 0.3602404434377, -0.6413130610647635, 11258999068426.24 ]
