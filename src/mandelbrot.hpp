@@ -8,21 +8,24 @@
 #include <opencv2/opencv.hpp>
 #include <omp.h>
 
+#include "settings.hpp"
+
 using namespace std;
 
 class Mandelbrot {
     public:
         // fully define the constructor here, assigning attributes directly
-        Mandelbrot(const string colormap_name, const int x_resolution, const int y_resolution) : 
-            colormap_name(colormap_name), 
-            nx(x_resolution),
-            ny(y_resolution),
+        Mandelbrot(Settings* settings) : 
+            colormap_name(settings->colormap), 
+            nx(settings->x_resolution),
+            ny(settings->y_resolution),
+            max_its(settings->max_its),
             colormap(loadColormap()) {
                 // row-major order, so y then x
-                X = cv::Mat(y_resolution, x_resolution, CV_64FC3); 
+                X = cv::Mat(settings->y_resolution, settings->x_resolution, CV_64FC3); 
 
                 // png, jpg etc only support integer color chanels
-                output_image = cv::Mat(y_resolution, x_resolution, CV_8UC3); 
+                output_image = cv::Mat(settings->y_resolution, settings->x_resolution, CV_8UC3); 
             };
         ~Mandelbrot() {};
 
@@ -47,6 +50,7 @@ class Mandelbrot {
         cv::Mat output_image;
         const int nx;
         const int ny;
+        const int max_its;
 
     private:
         const string colormap_name; 

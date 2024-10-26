@@ -1,13 +1,22 @@
+#ifndef MANDELBROT_IMAGE_HPP
+#define MANDELBROT_IMAGE_HPP
+
+#include "settings.hpp"
 #include "mandelbrot.hpp"
 #include "timer.hpp"
-#include "settings.hpp"
 
+using namespace std;
 
 class MandelbrotImage : public Mandelbrot {
     public:
-        // directly inherit the constructor from the parent class
-        using Mandelbrot::Mandelbrot; 
-        
+        MandelbrotImage(Settings* settings) : 
+            Mandelbrot(settings),
+            x(settings->trajectory_vector.at(0)[0]),
+            y(settings->trajectory_vector.at(0)[1]),
+            width(settings->start_width),
+            height(settings->start_height) 
+            {};
+
         void run() override {
 
             // setup timing
@@ -17,18 +26,13 @@ class MandelbrotImage : public Mandelbrot {
             spdlog::info("Begin mandelbrot set image generation");
 
             // Covert pixels to mandelbrot set coords
-            auto x = Settings::trajectory.at(0)[0];
-            auto y = Settings::trajectory.at(0)[1];
-            auto width = Settings::start_width;
-            auto height = Settings::start_height;
-
             vector<double> x_cor = linspace(x-width/2.0, x+width/2.0, nx);
-            vector<double> y_cor = linspace(y-height/2.0, y+height/2.0, ny);
+            vector<double> y_cor = linspace(y+height/2.0, y-height/2.0, ny); // from + to -, y order is other way around compared to matplotlib
             timer.timeit("linspace()", t_0);
 
             // main calculation
             auto t_1 = high_resolution_clock::now();
-            mandelbrot(x_cor, y_cor, Settings::max_its);
+            mandelbrot(x_cor, y_cor, max_its);
             timer.timeit("mandelbrot()", t_1);    
 
             // png, jpg etc only support integer color chanels, so convert
@@ -37,12 +41,19 @@ class MandelbrotImage : public Mandelbrot {
             X.convertTo(output_image, CV_8UC3, 255.0);
 
             // write/show the image
-            (void) cv::imwrite("mandelbrot.png", output_image);
-            (void) cv::imshow("mandelbrot.png", output_image);
+            cv::imwrite("mandelbrot.png", output_image);
+            cv::imshow("mandelbrot.png", output_image);
 
             timer.timeit("cv::imwrite(), imshow()", t_3);
             timer.timeit("main()", t_0);
             timer.logTime();
         };
 
+    private:
+        double x;
+        double y;
+        double width;
+        double height;
 };
+
+#endif

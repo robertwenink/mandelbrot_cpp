@@ -3,25 +3,35 @@
 
 #include <opencv2/opencv.hpp>
 #include <cmath>
-#include <format>
 
+#include <cstdio>
+#include <iostream>
+#include <fstream>
+
+#include "settings.hpp"
 #include "mandelbrot.hpp"
 #include "mandelbrot_trajectory.hpp"
 
 class MandelbrotVideo : public Mandelbrot, Trajectory {
     public:
-        MandelbrotVideo(const string colormap_name, const int x_resolution, const int y_resolution, const vector<vector<double>> trajectory_vector, const int nr_frames, const bool render, const bool liveplotting) : 
-            Mandelbrot(colormap_name, x_resolution, y_resolution),
-            Trajectory(trajectory_vector, nr_frames),
-            nr_frames(nr_frames), render(render), liveplotting(liveplotting) {};
+        MandelbrotVideo(Settings* settings) : 
+            Mandelbrot(settings),
+            Trajectory(settings), 
+            fps(settings->fps), 
+            output_filename(settings->output_filename), 
+            render(settings->render), 
+            liveplotting(settings->liveplotting) {};
 
         void run() override;
 
     private:
-        const int nr_frames;
+        // const int nr_frames is set by the Trajectory baseclass
+        const int fps;  
+        const string output_filename;  
         const bool render;  
         const bool liveplotting;
         int get_current_max_its(int current_frame_nr);
+        void log_performance(const double total_elapsed_seconds, const double total_render_time, const string& log_filename = "performance_log.csv"); // default arguments are defined in the header, do not use in the cpp file!
 };
 
 #endif

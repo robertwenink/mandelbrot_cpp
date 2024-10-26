@@ -2,13 +2,21 @@
 #define MANDELBROT_TRAJECTORY_HPP
 
 #include <vector>
+
+#include "settings.hpp"
+
 using namespace std;
 
 class Trajectory {
     public:
-        Trajectory(const vector<vector<double>> trajectory_vector, const int nr_frames) :
-            trajectory_vector(trajectory_vector), nr_frames(nr_frames), xy_smoothing_power(xy_smoothing_power),
-            r_dim(get_r_dim()) {
+        Trajectory(Settings* settings) :
+            trajectory_vector(settings->trajectory_vector), 
+            nr_frames(settings->nr_frames), 
+            start_height(settings->start_height), 
+            start_width(settings->start_width), 
+            xy_smoothing_power(settings->xy_smoothing_power) {
+                set_r_dim();
+                
                 set_trajectory_change_at_frame_numbers();
 
                 // I leave this to be set outside the constructor, such that we can change f_xy
@@ -20,7 +28,10 @@ class Trajectory {
     
     protected:
         // to be accessed by the 'befriended' MandelbrotVideo
-        const double r_dim;       
+        double start_height;
+        double start_width;
+        
+        double r_dim;       
         
         struct xy {
             double x;
@@ -40,19 +51,19 @@ class Trajectory {
             double x;
             double y;
             double target_width;
-            double target_heigth;
+            double target_height;
         };
 
         vector<InterpolationParameters> interpolation_parameters;
         vector<int> trajectory_change_at_frame_numbers;
 
         double corrected_interpolation(double x0, double x1, double f_xy, double f_err);
-        TrajectoryPoint get_trajectory_point(int i);
+        TrajectoryPoint get_trajectory_point(size_t i);
 
     private:
         const vector<vector<double>> trajectory_vector;
 
-        double get_r_dim();    
+        void set_r_dim();    
 
         void set_trajectory_change_at_frame_numbers();
 

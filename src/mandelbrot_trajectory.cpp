@@ -4,12 +4,12 @@
 /**
  * Defining the ratios at which each frame consecutively changes in size; defined using the complete simulation range
  */
-double Trajectory::get_r_dim() {
+void Trajectory::set_r_dim() {
     TrajectoryPoint tp_start = get_trajectory_point(0);
     TrajectoryPoint tp_end = get_trajectory_point(-1);
 
     // nr_frames -1, for the number of intervals
-    return pow((tp_end.target_heigth/tp_start.target_heigth),(1/(nr_frames-1)));
+    r_dim = pow(tp_end.target_height/tp_start.target_height, 1.0/(nr_frames-1));
 };    
 
 
@@ -48,7 +48,7 @@ void Trajectory::set_trajectory_change_at_frame_numbers() {
  * Function to convert trajectory point from [x,y,zoom] -> [x,y,width,height],    
  * width and height based on the initial screen size and the zoom.
  */
-Trajectory::TrajectoryPoint Trajectory::get_trajectory_point(int i) {
+Trajectory::TrajectoryPoint Trajectory::get_trajectory_point(size_t i) {
     TrajectoryPoint trajectory_point;
     vector<double> xyzoom; 
 
@@ -61,8 +61,8 @@ Trajectory::TrajectoryPoint Trajectory::get_trajectory_point(int i) {
     
     trajectory_point.x = xyzoom[0];
     trajectory_point.y = xyzoom[1];
-    trajectory_point.target_width = Settings::start_width / xyzoom[2];
-    trajectory_point.target_heigth = Settings::start_height / xyzoom[2];
+    trajectory_point.target_width = start_width / xyzoom[2];
+    trajectory_point.target_height = start_height / xyzoom[2];
     
     return trajectory_point;
 };
@@ -82,7 +82,7 @@ Trajectory::TrajectoryPoint Trajectory::get_trajectory_point(int i) {
 void Trajectory::set_interpolation_parameters() {
     // XY_SMOOTHING_POWER: let the location converge faster than the screensize (which is calculated with just r_dim); this looks smoother.
     // i.e. r_xy < r_dim so we converge faster to 0
-    double r_xy = std::pow(r_dim, xy_smoothing_power);
+    double r_xy = pow(r_dim, xy_smoothing_power);
 
     for (size_t i = 0; i < trajectory_change_at_frame_numbers.size() - 1; i++) {
         InterpolationParameters intpars;
@@ -112,7 +112,7 @@ void Trajectory::set_interpolation_parameters() {
         // At the interpolation, we will normalize f_xy to the [0,1] range and use: 
         // f_corr = f_err - f_xy / (f_err - 1)
 
-        double rN = std::pow(r_xy, traj_nr_frames);
+        double rN = pow(r_xy, traj_nr_frames);
         intpars.f_err = rN / (1 - rN);
         
         // reset the base interpolation factor for each new trajectory.
