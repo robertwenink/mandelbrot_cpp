@@ -1,4 +1,6 @@
 #include <chrono>
+
+// for opencv install gtk: vcpkg install opencv[gtk]
 #include <opencv2/opencv.hpp>
 
 #include <fstream>
@@ -6,9 +8,10 @@
 #include <vector>
 #include <cmath>
 
-#include "mandelbrot_image.hpp"
-// #include "mandelbrot_video.hpp"
 #include "settings.hpp"
+#include "mandelbrot.hpp"
+#include "mandelbrot_image.hpp"
+#include "mandelbrot_video.hpp"
 
 
 using namespace std;
@@ -28,14 +31,25 @@ void show_openmp(){
 
 
 int main() {
-    // do we have intel optimisations there?
-    cv::getBuildInformation();
-    show_openmp();
+    // do we have intel optimisations there, and ffmpeg enabled?
+    // std::cout << "Available backends: " << cv::getBuildInformation() << std::endl;
+    // openmp enabled?
+    // show_openmp();
 
-    // Load the Twilight colormap sampled in Python
-    MandelbrotImage renderer("twilight", Settings::x_resolution, Settings::y_resolution);
-    renderer.run();
+    Settings settings;
+    settings.loadFromYaml("settings.yaml");
 
+    unique_ptr<Mandelbrot> renderer;
+
+    // Instantiate based on settings.animate
+    if (settings.animate) {
+        renderer = make_unique<MandelbrotVideo>(&settings);
+    } else {
+        renderer = make_unique<MandelbrotImage>(&settings);
+    }
+    
+    // For video, make sure to have installed ffmpeg!  i.e. with vcpkg install ffmpeg
+    renderer->run();
 
     // show time image
     cv::waitKey(5);  
